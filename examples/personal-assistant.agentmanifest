@@ -1,0 +1,27 @@
+# AgentManifest — Personal Assistant
+# Always-on, proactive, multi-domain. Delegates sub-tasks, manages communications,
+# maintains continuity across sessions.
+
+FROM openclaw:latest
+
+MODEL claude-opus
+ROLE personal-assistant
+
+TOOLS browser, email, calendar, file-system, sub-agents, web-search
+MEMORY persistent, cross-session
+PERSONALITY ./soul.md
+CONTEXT tsvc-enabled
+
+GUARDRAILS approval-for-external-sends, budget-cap-daily=5.00
+AUTONOMY high
+HEARTBEAT interval=30m, quiet-hours=23:00-08:00
+
+CHANNELS telegram=in-out, email=in-out, twitter=out, slack=in-out
+PAYMENT stripe, corporate-card
+SPENDING daily-cap=50.00, per-transaction-cap=20.00
+RECEIVE invoices, reimbursements
+IDENTITY did:web:agents.example.com:assistant
+
+DEPLOY always-on
+RESTART on-failure
+RESOURCES memory=512m
