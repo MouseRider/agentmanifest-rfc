@@ -1,0 +1,21 @@
+# AgentManifest — Customer Support Agent
+# CrewAI's role-based execution model suits structured classify → resolve → escalate workflows.
+# For multi-agent support teams, define an agent-compose file coordinating multiple AgentManifests.
+
+FROM crewai:latest
+
+MODEL gpt-4o
+ROLE customer-support
+
+TOOLS helpdesk-api, knowledge-base, ticket-system, email
+KNOWLEDGE enterprise-support-kb@acme.internal
+
+GUARDRAILS tone-policy=./support-guidelines.md, no-refunds-without-approval
+AUTONOMY medium
+ESCALATION_PATH human-agent
+
+CHANNELS email=in-out, slack=in-out, twitter=out
+
+DEPLOY always-on
+SLA response-time=2m
+RESOURCES memory=512m
