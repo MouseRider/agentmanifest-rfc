@@ -132,7 +132,7 @@ Supports W3C Decentralized Identifiers (DIDs), OAuth 2.0 client credentials, and
 
 ```
 IDENTITY did:web:agents.example.com:assistant
-IDENTITY oauth-client=agent-skippster-prod
+IDENTITY oauth-client=agent-assistant-prod
 IDENTITY apikey-ref=vault://agents/trading-prod
 ```
 
