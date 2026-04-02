@@ -1,0 +1,22 @@
+# AgentManifest — Ops Monitor
+# Same harness as personal-assistant, completely different configuration.
+# Smaller model, read-only defaults, session-only memory, structured alerts only.
+# No improvisation — follows the playbook.
+
+FROM openclaw:latest
+
+MODEL claude-haiku
+ROLE ops-monitor
+
+TOOLS file-system, ssh, docker, http, alerting
+MEMORY session-only
+
+GUARDRAILS strict-instructions, no-generative-output, read-only-by-default
+AUTONOMY medium
+HEARTBEAT interval=5m
+
+ALERT_CHANNEL telegram-ops-thread
+ON_ERROR alert-and-retry, max-retries=3
+
+DEPLOY always-on
+RESOURCES memory=256m
