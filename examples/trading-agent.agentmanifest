@@ -1,0 +1,28 @@
+# AgentManifest — Trading Agent
+# Custom harness — no off-the-shelf framework fits here.
+# Financial guardrails enforced deterministically by harness code, not by prompting.
+# Hard stops: position size, stop loss, margin prohibition.
+# Every action tied to a verifiable OAuth identity for audit.
+
+FROM custom-harness:trading-v2
+
+MODEL gpt-4o-mini
+ROLE trading-agent
+
+TOOLS market-data-api, broker-api, position-tracker, risk-calculator
+MEMORY persistent, append-only-audit-log
+
+GUARDRAILS hard-stop-loss=2pct, max-position-size=5pct, no-margin, no-options
+AUTONOMY high-within-guardrails
+HUMAN_APPROVAL above-threshold=10000
+
+PAYMENT broker-api
+SPENDING daily-cap=25000.00, per-transaction-cap=10000.00
+RECEIVE settlement-proceeds
+WALLET crypto=disabled
+
+IDENTITY oauth-client=trading-agent-prod
+
+SCHEDULE market-hours-only, timezone=America/New_York
+DEPLOY always-on-during-schedule
+RESOURCES memory=512m, latency-target=low
