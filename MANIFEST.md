@@ -136,6 +136,18 @@ IDENTITY oauth-client=agent-assistant-prod
 IDENTITY apikey-ref=vault://agents/trading-prod
 ```
 
+**Verifiable capabilities and SLAs**
+
+Once an agent has a cryptographic identity, that identity can be bound to its declared capabilities — TOOLS, GUARDRAILS, AUTONOMY level, SPENDING limits. This makes capability claims checkable rather than advisory. A downstream agent or orchestrator can verify not just who an agent is, but what it is certified to do and within what constraints it operates.
+
+This opens the door to meaningful behavioural SLAs — not just uptime and response time, but quality and compliance guarantees: “this agent is certified to operate within these guardrails under this identity.” As agent-to-agent trust infrastructure matures, identity-bound capability verification becomes the foundation for trustworthy multi-agent systems.
+
+**Identity immutability**
+
+An IDENTITY directive binds a cryptographic identity to a specific agent definition. That binding should be treated as immutable — if the manifest changes in any meaningful way (different TOOLS, different GUARDRAILS, different MODEL), the identity should change too. Reusing the same identity across materially different definitions breaks the trust anchor: you can no longer verify what an agent is by checking its identity, because what it is has changed underneath.
+
+The practical implication: treat AgentManifest versions the way you treat signed software releases. A new version with different capabilities is a new identity. The old identity remains valid for the old definition. Revocation of an identity should not require taking down the harness — it should invalidate the binding between that identity and its capability claims.
+
 -----
 
 ### 2. Capabilities & Constraints
