@@ -10,7 +10,7 @@
 
 ## The Problem
 
-Everyone building declarative agent specs is solving for *portability*: write one definition, run it on any framework. That’s the fine goal but what about agent composition.
+Most declarative agent specs solve for *portability*: write one definition, run it on any framework. AgentManifest starts from a different question — not *where* an agent runs, but *what it needs to run well*.
 
 A personal assistant and an ops monitor are not the same agent with different prompts. They need different execution environments — different memory models, different autonomy levels, different guardrail enforcement, different lifecycle behaviors. Forcing them into the same harness means one of them is always misconfigured.
 
@@ -83,15 +83,19 @@ Same base harness. Completely different agent. The spec makes the differences ex
 
 ## How It Differs From Existing Approaches
 
-|                      |Oracle Agent Spec          |Docker docker-agent            |Agentman           |**AgentManifest**                 |
-|----------------------|---------------------------|-------------------------------|-------------------|----------------------------------|
-|Goal                  |Portability across runtimes|Declarative config, one runtime|Container packaging|Role-appropriate harness per agent|
-|Harness selection     |Abstracted away            |Fixed (one runtime)            |FastAgent/Agno only|First-class directive (`FROM`)    |
-|Behavioral enforcement|Framework-dependent        |Prompt-based                   |Not in scope       |Deterministic, harness-compiled   |
-|Multi-agent           |Single spec                |Coordinator model              |Not in scope       |agent-compose layer               |
-|Payment / commerce    |Not in scope               |Not in scope                   |Not in scope       |First-class directives            |
+|                      |Oracle Agent Spec          |Docker docker-agent            |gitagent                                    |Agentman           |**AgentManifest**                 |
+|----------------------|---------------------------|-------------------------------|--------------------------------------------|-------------------|----------------------------------|
+|Goal                  |Portability across runtimes|Declarative config, one runtime|Git-native agent definition, export anywhere|Container packaging|Role-appropriate harness per agent|
+|Harness selection     |Abstracted away            |Fixed (one runtime)            |Adapter-based export                        |FastAgent/Agno only|First-class directive (`FROM`)    |
+|Behavioral enforcement|Framework-dependent        |Prompt-based                   |RULES.md + compliance config                |Not in scope       |Deterministic, harness-compiled   |
+|Multi-agent           |Single spec                |Coordinator model              |Inheritance + dependencies                  |Not in scope       |agent-compose layer               |
+|Payment / commerce    |Not in scope               |Not in scope                   |Not in scope                                |Not in scope       |First-class directives            |
+|Format                |YAML                       |YAML                           |File system structure                       |Dockerfile-like    |Dockerfile-like DSL               |
+|Implementation        |Shipped                    |Shipped                        |Shipped (1k stars)                          |Shipped            |Design proposal / RFC             |
 
-The key difference: other specs try to make the runtime invisible. AgentManifest treats the runtime as the primary design decision.
+The key difference: gitagent, Oracle, and Docker all try to make the runtime invisible — write once, run anywhere. AgentManifest makes the opposite bet: the harness is the primary design decision, and different roles should run different runtimes optimized for their job.
+
+**On gitagent specifically:** It’s excellent and moving fast. If your goal is git-native agent versioning, compliance artifacts, and framework portability, gitagent is worth using today. AgentManifest is solving a different problem — not “how do I define an agent portably” but “how do I declare that this agent should run on LangGraph and that one on Claude Code, and make both configurations auditable and composable.” The two could be complementary: a gitagent repo could reference an AgentManifest to declare its harness requirements.
 
 -----
 
