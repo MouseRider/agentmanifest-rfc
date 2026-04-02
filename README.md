@@ -3,7 +3,7 @@
 **A declarative spec for AI agents — one spec per agent, the right harness per role.**
 
 > Status: Design Proposal / RFC v0.3  
-> Origin: Alex & Skippster, 2026-03-31  
+> Origin: Oleksandr Tsukanov, 2026-03-31  
 > Feedback welcome — open an issue or start a discussion.
 
 -----
