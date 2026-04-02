@@ -113,3 +113,5 @@ The key difference from Docker: there is no single runtime that executes all age
 **Docker docker-agent**: Declarative YAML config for agents on a single runtime. Proves the appetite for declarative agent configuration. Doesn’t address harness selection.
 
 **AgentSpec (ICSE ’26)**: Unrelated despite the name — a runtime enforcement framework for LLM agent safety. The `GUARDRAILS` directive in AgentManifest is inspired by similar motivations but operates at the spec layer rather than the enforcement layer.
+
+**gitagent** (github.com/open-gitagent/gitagent): Git-native agent definition — your repository structure becomes your agent, with adapters to export to any framework. Excellent for versioning, compliance artifacts, and portability. Explicitly portability-first: the adapters let you run the same definition on CrewAI, Claude Code, OpenAI, and others. AgentManifest’s thesis is the opposite: the harness matters, so choose it deliberately rather than abstracting it away. The two are potentially complementary — a gitagent repo could embed an AgentManifest to declare harness requirements while gitagent handles versioning and git-native tooling.
