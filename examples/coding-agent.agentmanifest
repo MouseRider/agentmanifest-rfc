@@ -1,0 +1,20 @@
+# AgentManifest — Coding Agent
+# On-demand. Spins up on PR events. Git-native sandbox with deterministic guardrails.
+# Supervised — asks before acting on ambiguous decisions.
+
+FROM claude-code:latest
+
+MODEL claude-sonnet
+ROLE coding-agent
+
+TOOLS git, terminal, file-system, browser, test-runner
+SANDBOX repo-scoped
+CONTEXT repo-root=./
+
+GUARDRAILS test-before-commit, no-force-push, require-green-ci
+AUTONOMY supervised
+ON_ERROR ask-human
+
+DEPLOY on-demand
+TRIGGER pr-opened, pr-review-requested
+RESOURCES memory=1g, timeout=30m
