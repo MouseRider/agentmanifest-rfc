@@ -10,7 +10,7 @@
 
 ## The Problem
 
-Everyone building declarative agent specs is solving for *portability*: write one definition, run it on any framework. That’s the wrong goal.
+Everyone building declarative agent specs is solving for *portability*: write one definition, run it on any framework. That’s the fine goal but what about agent composition.
 
 A personal assistant and an ops monitor are not the same agent with different prompts. They need different execution environments — different memory models, different autonomy levels, different guardrail enforcement, different lifecycle behaviors. Forcing them into the same harness means one of them is always misconfigured.
 
