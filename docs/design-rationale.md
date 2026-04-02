@@ -115,3 +115,15 @@ The key difference from Docker: there is no single runtime that executes all age
 **AgentSpec (ICSE ’26)**: Unrelated despite the name — a runtime enforcement framework for LLM agent safety. The `GUARDRAILS` directive in AgentManifest is inspired by similar motivations but operates at the spec layer rather than the enforcement layer.
 
 **gitagent** (github.com/open-gitagent/gitagent): Git-native agent definition — your repository structure becomes your agent, with adapters to export to any framework. Excellent for versioning, compliance artifacts, and portability. Explicitly portability-first: the adapters let you run the same definition on CrewAI, Claude Code, OpenAI, and others. AgentManifest’s thesis is the opposite: the harness matters, so choose it deliberately rather than abstracting it away. The two are potentially complementary — a gitagent repo could embed an AgentManifest to declare harness requirements while gitagent handles versioning and git-native tooling.
+
+-----
+
+## Identity as a Trust Anchor
+
+The `IDENTITY` directive is more than an audit trail convenience. It points toward two properties that become important as multi-agent systems mature.
+
+**Verifiable capability claims.** Once an agent has a cryptographic identity, that identity can be bound to its declared capabilities — which tools it has access to, which guardrails are enforced, what its autonomy level is, what it can spend. This makes capability claims checkable by other agents and orchestrators, not just readable by humans. The foundation for meaningful behavioural SLAs: not just “this agent responds within 2 minutes” but “this agent is certified to operate within these constraints under this identity” — a claim that can be verified cryptographically rather than taken on trust.
+
+**Immutability of the identity-definition binding.** If an agent’s identity can persist across materially different manifest versions — different tools, different guardrails, different model — the identity loses its meaning as a trust anchor. You can no longer know what an agent is by checking who it is. The implication is that meaningful changes to an AgentManifest should produce a new identity, the same way a new signed software release produces a new signature. The old identity remains valid for the old definition. Identity revocation should invalidate the capability binding, not necessarily the harness.
+
+This is forward-looking — the infrastructure for cryptographic capability verification in multi-agent systems doesn’t fully exist yet. But the `IDENTITY` directive is designed with this trajectory in mind, and the spec intentionally supports DIDs and OAuth client credentials as identity mechanisms that can carry verifiable credential payloads when the ecosystem is ready.
