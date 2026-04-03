@@ -167,4 +167,4 @@ See [`CONTRIBUTING.md`](./CONTRIBUTING.md) for how RFC discussion works here.
 
 ## License
 
-Apache 2.0. See [`LICENSE`](./LICENSE).
+Creative Commons Zero v1.0 Universal. See [`LICENSE`](./LICENSE).
